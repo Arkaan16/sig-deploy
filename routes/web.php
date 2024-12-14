@@ -20,7 +20,11 @@ Route::get('/', function () {
 use App\Http\Controllers\RumahSakitController;
 
 Route::get('/api/rumah-sakit', [RumahSakitController::class, 'getGeoJSON']);
+Route::post('/api/rumah-sakit', [RumahSakitController::class, 'store']);
+Route::put('/api/rumah-sakit/{id}', [RumahSakitController::class, 'update']);
+Route::delete('/api/rumah-sakit/{id}', [RumahSakitController::class, 'destroy']);
 
 Route::get('/peta', function () {
     return view('peta.index');
 });
+
