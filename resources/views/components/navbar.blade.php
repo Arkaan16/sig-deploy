@@ -14,7 +14,7 @@
            class="block md:inline-block hover:text-sky-300 px-3 py-3 md:border-none {{ Request::is('/') ? 'bg-sky-700 rounded text-white' : '' }}">
            Beranda
         </a>
-        <a href="#" 
+        <a href="/peta" 
            class="block md:inline-block hover:text-sky-300 px-3 py-3 md:border-none ">
            Peta
         </a>

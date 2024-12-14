@@ -16,3 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('landing.index');
 });
+
+use App\Http\Controllers\RumahSakitController;
+
+Route::get('/api/rumah-sakit', [RumahSakitController::class, 'getGeoJSON']);
+
+Route::get('/peta', function () {
+    return view('peta.index');
+});
