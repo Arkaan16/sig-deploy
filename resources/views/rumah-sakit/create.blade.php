@@ -20,12 +20,12 @@
             @csrf
             <div>
                 <label for="namobj" class="block text-sm font-medium text-gray-700">Nama Rumah Sakit</label>
-                <input type="text" name="namobj" id="namobj" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" required>
+                <input type="text" name="namobj" id="namobj" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" >
             </div>
 
             <div>
                 <label for="remark" class="block text-sm font-medium text-gray-700">Jenis Rumah Sakit</label>
-                <input type="text" name="remark" id="remark" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" required>
+                <input type="text" name="remark" id="remark" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" >
             </div>
 
             <div>
@@ -40,6 +40,12 @@
 
             <input type="hidden" name="latitude" id="latitude">
             <input type="hidden" name="longitude" id="longitude">
+
+            <div>
+                <label for="geojson" class="block text-sm font-medium text-gray-700">Upload File GeoJSON</label>
+                <input type="file" name="geojson" id="geojson" accept=".geojson" class="mt-1 block w-full text-sm text-gray-500 border border-gray-300 rounded-md cursor-pointer">
+            </div>
+            
 
             <!-- Tombol Kembali dan Tombol Tambah Rumah Sakit -->
             <div class="flex mt-4">

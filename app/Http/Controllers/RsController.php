@@ -16,29 +16,50 @@ class RsController extends Controller
 
     public function store(Request $request)
     {
+        // Validasi data
         $request->validate([
-            'namobj' => 'required',
-            'remark' => 'required',
-            'foto' => 'nullable|image',
-            'latitude' => 'required',
-            'longitude' => 'required',
+            'namobj' => 'nullable|string|max:255',
+            'remark' => 'nullable|string|max:255',
+            'alamat' => 'nullable|string',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'geojson' => 'nullable|file|mimes:json,geojson|max:5120',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
         ]);
 
-        $fotoPath = null;
-        if ($request->hasFile('foto')) {
-            $fotoPath = $request->file('foto')->store('public/fotos');
+        // Proses file GeoJSON jika ada
+        if ($request->hasFile('geojson')) {
+            $file = $request->file('geojson');
+            $geojsonData = json_decode(file_get_contents($file->getRealPath()), true);
+
+            foreach ($geojsonData['features'] as $feature) {
+                Rs::create([
+                    'namobj' => $feature['properties']['NAMOBJ'],
+                    'remark' => $feature['properties']['REMARK'],
+                    'alamat' => $feature['properties']['ALAMAT'] ?? null,
+                    'latitude' => $feature['geometry']['coordinates'][1],
+                    'longitude' => $feature['geometry']['coordinates'][0],
+                ]);
+            }
+
+            return redirect()->route('rumah-sakit.index')->with('success', 'Data dari GeoJSON berhasil ditambahkan.');
         }
 
-        Rs::create([
-            'namobj' => $request->namobj,
-            'remark' => $request->remark,
-            'alamat' => $request->alamat,
-            'foto' => $fotoPath,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
-        ]);
+        // Proses input data manual (jika diisi)
+        if ($request->filled('latitude') && $request->filled('longitude')) {
+            Rs::create([
+                'namobj' => $request->input('namobj'),
+                'remark' => $request->input('remark'),
+                'alamat' => $request->input('alamat'),
+                'foto' => $request->file('foto') ? $request->file('foto')->store('public/foto') : null,
+                'latitude' => $request->input('latitude'),
+                'longitude' => $request->input('longitude'),
+            ]);
 
-        return redirect()->route('rumah-sakit.index'); // Pastikan route ini ada
+            return redirect()->route('rumah-sakit.index')->with('success', 'Rumah Sakit berhasil ditambahkan.');
+        }
+
+        return redirect()->route('rumah-sakit.index')->with('error', 'Gagal menambahkan data.');
     }
 
 
