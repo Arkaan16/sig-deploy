@@ -6,6 +6,8 @@
     <title>@yield('title', 'Peta')</title>
     <link rel="icon" href="/assets/img/logol.png" type="image/png">
     @vite('resources/css/app.css')
+    <!-- Menyertakan Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
     <!-- Tailwind -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">

@@ -1,24 +1,24 @@
-
-<aside class="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
+<aside class="flex min-h-screen relative bg-sidebar w-64 hidden sm:block shadow-xl">
     <div class="p-6">
-        <a href="{{ route('admin.dashboard') }}" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
+        <a href="#" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
     </div>
     <nav class="text-white text-base font-semibold pt-3">
         <!-- Dashboard -->
-        <a href="{{ route('admin.dashboard')}}" 
-           class="flex items-center {{ request()->routeIs('admin.dashboard') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-4 pl-6 nav-item">
+        <a href="{{ route('peta.index') }}" 
+           class="flex items-center {{ request()->routeIs('peta.index') ? 'bg-blue-600 text-white' : 'opacity-75 hover:opacity-100' }} py-4 pl-6 nav-item">
             <i class="fas fa-tachometer-alt mr-3"></i>
             Dashboard
+        </a>   
+        <!-- Data Rumah Sakit -->
+        <a href="{{ route('rumah-sakit.index') }}"
+           class="flex items-center {{ request()->routeIs('rumah-sakit.*') ? 'bg-blue-600 text-white' : 'opacity-75 hover:opacity-100' }} py-4 pl-6 nav-item">
+            <i class="fas fa-hospital mr-3"></i>
+            Data Rumah Sakit
         </a>
-
-
-        <!-- Log Out -->
-        <form method="POST" action="{{ route('logout') }}" class="absolute w-full bottom-0">
-            @csrf
-            <button type="submit" class="upgrade-btn w-full active-nav-link text-white flex items-center justify-center py-4 bg-red-600 hover:bg-red-700">
-                <i class="fas fa-arrow-circle-up mr-3"></i>
-                Log Out
-            </button>
-        </form>        
+        <a href="{{ route('keluar') }}"
+           class="flex items-center py-4 pl-6 nav-item opacity-75 hover:opacity-100">
+            <i class="fas fa-sign-out-alt mr-3"></i>
+            Keluar
+        </a>
     </nav>
 </aside>

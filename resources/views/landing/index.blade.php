@@ -14,13 +14,13 @@
             <div class="text-center text-white">
                 <h1 class="text-4xl md:text-6xl font-bold mb-4">SIG Lampung Selatan</h1>
                 <p class="text-lg md:text-xl mb-6">Sistem Informasi Geografis untuk Analisis Sebaran Rumah Sakit di Lampung Selatan</p>
-                <a href="#feature" class="bg-sky-500 hover:bg-sky-700 text-white font-bold py-3 px-6 rounded-full text-lg">Jelajahi Sekarang</a>
+                <a href="/peta" class="bg-sky-500 hover:bg-sky-700 text-white font-bold py-3 px-6 rounded-full text-lg">Jelajahi Sekarang</a>
             </div>
         </div>
     </div>
 
     <!-- Features -->
-    <section id="feature" class="bg-gray-100 py-20 mt-20 lg:mt-5 px-4 md:px-8 lg:px-16">
+    <section id="feature" class="py-20 mt-20 lg:mt-5 px-4 md:px-8 lg:px-16">
         <!-- Heading -->
         <div class="sm:w-3/4 lg:w-5/12 mx-auto px-2 animate-fade-up">
             <h1 class="text-3xl text-center text-gray-800">Fitur Utama</h1>

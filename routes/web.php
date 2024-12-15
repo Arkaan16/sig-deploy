@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RsController;
-use App\Http\Controllers\RumahSakitController;
 
 
 /*
@@ -20,13 +19,14 @@ Route::get('/', function () {
     return view('landing.index');
 });
 
+Route::get('/keluar', function () {
+    return redirect('/'); // Mengarahkan ke halaman landing
+})->name('keluar');
 
-Route::resource('rs', RsController::class);
 
-Route::get('/api/rumah-sakit', [RumahSakitController::class, 'getGeoJSON']);
-Route::post('/api/rumah-sakit', [RumahSakitController::class, 'store']);
-Route::put('/api/rumah-sakit/{id}', [RumahSakitController::class, 'update']);
-Route::delete('/api/rumah-sakit/{id}', [RumahSakitController::class, 'destroy']);
+Route::resource('rumah-sakit', RsController::class);
+
+Route::get('/rumah-sakit', [RsController::class, 'list'])->name('rumah-sakit.index');
 
 Route::get('/peta', [RsController::class, 'index'])->name('peta.index');
 
