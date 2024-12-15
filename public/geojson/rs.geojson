@@ -1,0 +1,16 @@
+{
+"type": "FeatureCollection",
+"name": "rs",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "NAMOBJ": "Rumah Sakit Umum Daerah Dr. H. Bob Bazar. SKm", "LCODE": "GI0020", "REMARK": "Rumah Sakit Umum", "METADATA": null, "SRS_ID": null, "TIPRST": 0, "JPLYRS": 1, "ALAMAT": null }, "geometry": { "type": "Point", "coordinates": [ 105.596359, -5.727431, 0.0 ] } },
+{ "type": "Feature", "properties": { "NAMOBJ": "PMI Lampung Selatan", "LCODE": "GI0020", "REMARK": "Rumah Sakit Khusus", "METADATA": null, "SRS_ID": null, "TIPRST": 0, "JPLYRS": 2, "ALAMAT": null }, "geometry": { "type": "Point", "coordinates": [ 105.585934885000086, -5.715694323999969, 0.0 ] } },
+{ "type": "Feature", "properties": { "NAMOBJ": "Balai Pengobatan Waren Sidomakmur", "LCODE": "GI0020", "REMARK": "Rumah Sakit Khusus", "METADATA": null, "SRS_ID": null, "TIPRST": 0, "JPLYRS": 2, "ALAMAT": null }, "geometry": { "type": "Point", "coordinates": [ 105.614984, -5.646052, 0.0 ] } },
+{ "type": "Feature", "properties": { "NAMOBJ": "Pusat Kesehatan Hewan Kecamatan Candipuro", "LCODE": "GI0020", "REMARK": "Rumah Sakit Khusus", "METADATA": null, "SRS_ID": null, "TIPRST": 0, "JPLYRS": 2, "ALAMAT": null }, "geometry": { "type": "Point", "coordinates": [ 105.595528, -5.535632998999972, 0.0 ] } },
+{ "type": "Feature", "properties": { "NAMOBJ": "Rumah Sakit Jiwa Lampung", "LCODE": "GI0020", "REMARK": "Rumah Sakit Khusus", "METADATA": null, "SRS_ID": null, "TIPRST": 0, "JPLYRS": 2, "ALAMAT": null }, "geometry": { "type": "Point", "coordinates": [ 105.194387387000063, -5.375344755999947, 0.0 ] } },
+{ "type": "Feature", "properties": { "NAMOBJ": "Rumah Sakit Jiwa Bandarlampung", "LCODE": "GI0020", "REMARK": "Rumah Sakit Khusus", "METADATA": null, "SRS_ID": null, "TIPRST": 0, "JPLYRS": 2, "ALAMAT": null }, "geometry": { "type": "Point", "coordinates": [ 105.194658139000069, -5.375245158999974, 0.0 ] } },
+{ "type": "Feature", "properties": { "NAMOBJ": "Balai Pengobatan PTPN Waygalih", "LCODE": "GI0020", "REMARK": "Rumah Sakit Khusus", "METADATA": null, "SRS_ID": null, "TIPRST": 0, "JPLYRS": 2, "ALAMAT": null }, "geometry": { "type": "Point", "coordinates": [ 105.363609463000046, -5.362385402999962, 0.0 ] } },
+{ "type": "Feature", "properties": { "NAMOBJ": "Rumah Sakit Natar Medika", "LCODE": "GI0020", "REMARK": "Rumah Sakit Umum", "METADATA": null, "SRS_ID": null, "TIPRST": 0, "JPLYRS": 1, "ALAMAT": null }, "geometry": { "type": "Point", "coordinates": [ 105.195504657000072, -5.312200012999938, 0.0 ] } },
+{ "type": "Feature", "properties": { "NAMOBJ": "Pusat Kesehatan Hewan Margakaya", "LCODE": "GI0020", "REMARK": "Rumah Sakit Khusus", "METADATA": null, "SRS_ID": null, "TIPRST": 0, "JPLYRS": 2, "ALAMAT": null }, "geometry": { "type": "Point", "coordinates": [ 105.301122596000084, -5.30477566199994, 0.0 ] } }
+]
+}

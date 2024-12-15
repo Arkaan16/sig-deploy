@@ -1,153 +1,104 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Peta Rumah Sakit</title>
+    <title>Tambah Rumah Sakit</title>
+
+    <!-- Menyertakan Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    
+    <!-- Menyertakan Tailwind CSS untuk styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
     <style>
-        #map {
-            height: 500px;
-            max-width: 80%;
-            margin: 20px auto;
-            border: 2px solid #ccc;
-            border-radius: 10px;
-        }
-        .form-container {
-            max-width: 80%;
-            margin: 20px auto;
-            display: none;
-        }
-        .form-container input,
-        .form-container textarea,
-        .form-container button {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0;
-        }
-        .button-container {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .button-container button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
-        .button-container button:hover {
-            background-color: #0056b3;
-        }
+        #map { height: 500px; } /* Ukuran map */
     </style>
 </head>
-<body>
-    <h1 style="text-align: center;">Rumah Sakit di Kabupaten Lampung Selatan</h1>
-    <div id="map"></div>
+<body class="bg-gray-100">
 
-    <!-- Tombol untuk menampilkan form -->
-    <div class="button-container">
-        <button id="add-data-button">Tambah Data Rumah Sakit</button>
-    </div>
+    <div class="container mx-auto p-6">
+        <h1 class="text-xl font-bold mb-4">Tambah Rumah Sakit</h1>
+        
+        <!-- Peta Leaflet -->
+        <div id="map"></div>
 
-    <!-- Form untuk tambah/edit data -->
-    <div class="form-container" id="form-container">
-        <h3>Tambah/Edit Rumah Sakit</h3>
-        <form id="hospital-form">
-            <input type="hidden" id="hospital-id" />
-            <input type="text" id="hospital-name" placeholder="Nama Rumah Sakit" required />
-            <textarea id="hospital-address" placeholder="Alamat" required></textarea>
-            <input type="text" id="hospital-type" placeholder="Jenis Rumah Sakit" required />
-            <input type="number" id="hospital-capacity" placeholder="Kapasitas" required />
-            <input type="text" id="hospital-coordinates" placeholder="Koordinat (lat,lng)" required />
-            <button type="submit">Simpan</button>
+        <!-- Formulir untuk menambahkan Rumah Sakit -->
+        <form id="addPointForm" method="POST" action="/peta" enctype="multipart/form-data" class="mt-4 space-y-4 bg-white p-6 rounded shadow-md">
+            @csrf
+            <div>
+                <label for="namobj" class="block text-sm font-medium text-gray-700">Nama Rumah Sakit</label>
+                <input type="text" name="namobj" id="namobj" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" required>
+            </div>
+
+            <div>
+                <label for="remark" class="block text-sm font-medium text-gray-700">Jenis Rumah Sakit</label>
+                <input type="text" name="remark" id="remark" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" required>
+            </div>
+
+            <div>
+                <label for="foto" class="block text-sm font-medium text-gray-700">Foto</label>
+                <input type="file" name="foto" id="foto" class="mt-1 block w-full text-sm text-gray-500 border border-gray-300 rounded-md cursor-pointer">
+            </div>
+
+            <div>
+                <label for="alamat" class="block text-sm font-medium text-gray-700">Deskripsi</label>
+                <textarea name="alamat" id="alamat" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"></textarea>
+            </div>
+
+            <input type="hidden" name="latitude" id="latitude">
+            <input type="hidden" name="longitude" id="longitude">
+
+            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md">Tambah Rumah Sakit</button>
         </form>
     </div>
 
+    <!-- Menyertakan Leaflet JS -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script>
-        const map = L.map('map').setView([-5.6, 105.65], 10);
 
+    <script>
+        // Inisialisasi peta dan set koordinat awal
+        var map = L.map('map').setView([-5.727431, 105.596359], 13);
+
+        // Menambahkan layer peta OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '© OpenStreetMap contributors'
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Fungsi untuk menampilkan data
-        function loadHospitals() {
-            fetch('/api/rumah-sakit')
-                .then(response => response.json())
-                .then(data => {
-                    L.geoJSON(data, {
-                        onEachFeature: function (feature, layer) {
-                            layer.bindPopup(`
-                                <b>${feature.properties.nama}</b><br>
-                                Alamat: ${feature.properties.alamat}<br>
-                                Jenis: ${feature.properties.jenis}<br>
-                                Kapasitas: ${feature.properties.kapasitas} kamar<br>
-                                <button onclick="editHospital(${feature.properties.id}, '${feature.properties.nama}', '${feature.properties.alamat}', '${feature.properties.jenis}', ${feature.properties.kapasitas}, '${JSON.stringify(feature.geometry)}')">Edit</button>
-                                <button onclick="deleteHospital(${feature.properties.id})">Hapus</button>
-                            `);
-                        }
-                    }).addTo(map);
-                });
-        }
+        // Menambahkan marker untuk setiap rumah sakit
+        // Menambahkan marker untuk setiap rumah sakit
+@foreach ($rs as $rsItem)
+    var fotoUrl = "{{ Storage::url($rsItem->foto) }}"; // Mengambil URL foto dari storage
+    var popupContent = "<b>{{ $rsItem->namobj }}</b><br>{{ $rsItem->remark }}<br>{{ $rsItem->alamat }}";
+    
+    // Jika foto ada, tampilkan di popup
+    if (fotoUrl) {
+        popupContent += "<br><img src='" + fotoUrl + "' alt='Foto Rumah Sakit' style='width: 100px; height: auto;'>";
+    }
 
-        loadHospitals();
+    L.marker([{{ $rsItem->latitude }}, {{ $rsItem->longitude }}])
+        .addTo(map)
+        .bindPopup(popupContent);
+@endforeach
 
-        // Menangani form submission
-        document.getElementById('hospital-form').addEventListener('submit', function (e) {
-            e.preventDefault();
 
-            const id = document.getElementById('hospital-id').value;
-            const coordinates = document.getElementById('hospital-coordinates').value.split(',').map(Number);
+        var marker;
 
-            const hospitalData = {
-                nama: document.getElementById('hospital-name').value,
-                alamat: document.getElementById('hospital-address').value,
-                jenis: document.getElementById('hospital-type').value,
-                kapasitas: document.getElementById('hospital-capacity').value,
-                koordinat: JSON.stringify({ type: "Point", coordinates: [coordinates[1], coordinates[0]] })
-            };
+        // Menangani klik pada peta
+        map.on('click', function(e) {
+            // Jika marker sudah ada, pindahkan ke lokasi baru
+            if (marker) {
+                marker.setLatLng(e.latlng);
+            } else {
+                // Jika belum ada marker, buat marker baru
+                marker = L.marker(e.latlng).addTo(map);
+            }
 
-            fetch(id ? `/api/rumah-sakit/${id}` : '/api/rumah-sakit', {
-                method: id ? 'PUT' : 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(hospitalData)
-            }).then(() => {
-                alert('Data berhasil disimpan!');
-                location.reload();
-            });
-        });
-
-        // Fungsi untuk edit data
-        function editHospital(id, nama, alamat, jenis, kapasitas, geometry) {
-            document.getElementById('hospital-id').value = id;
-            document.getElementById('hospital-name').value = nama;
-            document.getElementById('hospital-address').value = alamat;
-            document.getElementById('hospital-type').value = jenis;
-            document.getElementById('hospital-capacity').value = kapasitas;
-            document.getElementById('hospital-coordinates').value = `${geometry.coordinates[1]},${geometry.coordinates[0]}`;
-            document.getElementById('form-container').style.display = 'block';
-        }
-
-        // Fungsi untuk hapus data
-        function deleteHospital(id) {
-            fetch(`/api/rumah-sakit/${id}`, { method: 'DELETE' })
-                .then(() => {
-                    alert('Data berhasil dihapus!');
-                    location.reload();
-                });
-        }
-
-        // Menampilkan form tambah data
-        document.getElementById('add-data-button').addEventListener('click', function () {
-            document.getElementById('form-container').style.display = 'block';
-            document.getElementById('hospital-id').value = '';
-            document.getElementById('hospital-form').reset();
+            // Menyimpan koordinat yang diklik ke dalam input tersembunyi
+            document.getElementById('latitude').value = e.latlng.lat;
+            document.getElementById('longitude').value = e.latlng.lng;
         });
     </script>
+
 </body>
 </html>
